@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: Backorder
+Version: 0.0.1
+Summary: Backorder prediction package
+Home-page: https://github.com/Jvdboss7/Backorder-Prediction
+Author: Jaydeep Dixit
+Author-email: jaydeep@ineuron.ai
+Requires-Python: >=3.7
