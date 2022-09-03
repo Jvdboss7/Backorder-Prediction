@@ -1,0 +1,10 @@
+stages: 
+  load_data:
+    cmd: python src/dataIngestion.py --config=config/congig.yaml
+    deps:
+      - src/dataIngestion.py
+      - src/utils/all_utils.py
+      - config/config.yaml
+
+    outs:
+      - artifacts/raw_local_dir/data.csv
