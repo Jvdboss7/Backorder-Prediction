@@ -1,0 +1,5 @@
+data_source: https://github.com/Jvdboss7/Dataset/blob/e88057fece8f5493fc9ac3a4495f555338d9a17a/backorder.csv
+artfifacts:
+  artifacts_dir: artfifacts
+  raw_local_dir: raw_local_dir
+  raw_local_file: data.csv
