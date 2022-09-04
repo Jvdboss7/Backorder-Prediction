@@ -1,6 +1,6 @@
 stages: 
   load_data:
-    cmd: python src/dataIngestion.py --config=config/congig.yaml
+    cmd: python src/dataIngestion.py --config=config/config.yaml
     deps:
       - src/dataIngestion.py
       - src/utils/all_utils.py
