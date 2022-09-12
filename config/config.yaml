@@ -6,3 +6,7 @@ artifacts:
 
   transform_data_dir: transform_local_dir
   transform_data_file: transformed_data.csv 
+
+  split_data_dir: split_data_dir
+  train: train.csv
+  test: test.csv
