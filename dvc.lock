@@ -4,8 +4,8 @@ stages:
     cmd: python src/dataIngestion.py --config=config/config.yaml
     deps:
     - path: config/config.yaml
-      md5: 09a23728cb2eb1ff9132c45773310f55
-      size: 215
+      md5: b90544a477dd79bab1bcf0960f471c19
+      size: 303
     - path: src/dataIngestion.py
       md5: 98bef255f8c21d0753fae0da92f4fce8
       size: 1026
@@ -16,3 +16,19 @@ stages:
     - path: artifacts/raw_local_dir/data.csv
       md5: d92a57c8f143b46dbe18f546a2124b2c
       size: 23387086
+  transformation:
+    cmd: python src/dataTransformation.py --config=config/config.yaml
+    deps:
+    - path: config/config.yaml
+      md5: b90544a477dd79bab1bcf0960f471c19
+      size: 303
+    - path: src/dataIngestion.py
+      md5: 98bef255f8c21d0753fae0da92f4fce8
+      size: 1026
+    - path: src/utils/all_utils.py
+      md5: 532c20623954cd16c0595a0b35855cd5
+      size: 339
+    outs:
+    - path: artifacts/transform_local_dir/transformed_data.csv
+      md5: b9a4d30cf08bb93e10277558f5a66427
+      size: 42413191

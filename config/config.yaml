@@ -3,3 +3,6 @@ artifacts:
   artifacts_dir: artifacts
   raw_local_dir: raw_local_dir
   raw_local_file: data.csv
+
+  transform_data_dir: transform_local_dir
+  transform_data_file: transformed_data.csv 

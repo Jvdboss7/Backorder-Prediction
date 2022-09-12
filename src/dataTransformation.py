@@ -9,7 +9,7 @@ from sklearn.decomposition import PCA
 import numpy as np
 import os 
 
-def get_data(config_path):
+def read_df(config_path):
     config = read_yaml(config_path)
 
     remote_data_path = config["data_source"]
@@ -27,8 +27,9 @@ def get_data(config_path):
     print(raw_local_file_path)
 
     df = pd.read_csv(raw_local_file_path)
+    return df
 
-def process(df):
+def process(df, config_path):
     """
     Some strategies adopted:
     - Binaries were converted from strings ('Yes' and 'No') to 1 and 0.
@@ -41,6 +42,8 @@ def process(df):
     series median and mean. 
     """
     # Imput missing lines and drop line with problem
+    config = read_yaml(config_path)
+
 
     df['lead_time'] = SimpleImputer(strategy='median').fit_transform(
                                     df['lead_time'].values.reshape(-1, 1))
@@ -59,14 +62,25 @@ def process(df):
                    'local_bo_qty', 'pieces_past_due', 'sales_1_month', 
                    'sales_3_month', 'sales_6_month', 'sales_9_month',]
     df[qty_related] = normalize(df[qty_related], axis=1)
-    df = df.astype(float)   
-    return df
+    df = df.astype(float)
 
-new_df=process(df)
+    # Create transformed directory
+
+    artifacts_dir = config["artifacts"]['artifacts_dir']
+    transform_data_dir = config["artifacts"]['transform_data_dir']
+    transform_data_file = config["artifacts"]['transform_data_file']
+
+    transform_data_dir_path = os.path.join(artifacts_dir,transform_data_dir)
+    transform_data_file_path = os.path.join(artifacts_dir,transform_data_dir,\
+        transform_data_file)
+
+    create_directory([transform_data_dir_path])
+
+    df.to_csv(transform_data_file_path, index=False)
 
 def transformation(new_df):
     # StandardScaler for scaling the values
-    X= df.drop(df.columns[-1], axis = 1)
+    X= new_df.drop(new_df.columns[-1], axis = 1)
     #y = df['went_on_backorder'] 
     X_std = StandardScaler().fit_transform(X)
 
@@ -83,4 +97,6 @@ if __name__=='__main__':
 
     parsed_args = args.parse_args()
 
-    get_data(config_path=parsed_args.config)
+    df= read_df(config_path=parsed_args.config)
+    process(df, config_path=parsed_args.config)
+    #X_reduced=transformation(df)

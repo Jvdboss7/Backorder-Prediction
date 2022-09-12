@@ -8,3 +8,13 @@ stages:
 
     outs:
       - artifacts/raw_local_dir/data.csv
+  transformation:
+      cmd: python src/dataTransformation.py --config=config/config.yaml
+      deps:
+        - src/dataIngestion.py
+        - src/utils/all_utils.py
+        - config/config.yaml
+
+      outs:
+        - artifacts/transform_local_dir/transformed_data.csv
+    
