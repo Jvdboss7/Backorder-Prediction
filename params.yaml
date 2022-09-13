@@ -1,3 +1,8 @@
 base:
   random_state: 42
   test_size: 0.3
+
+model_params: 
+  Logistic: 
+    penalty: l2
+    max_iter: 200

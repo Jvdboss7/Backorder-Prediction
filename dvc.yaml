@@ -11,23 +11,39 @@ stages:
   transformation:
       cmd: python src/dataTransformation.py --config=config/config.yaml
       deps:
-        - src/dataTransformation.py
+        - src/dataIngestion.py
         - src/utils/all_utils.py
         - config/config.yaml
+        
       outs:
         - artifacts/transform_local_dir/transformed_data.csv
   split_data:
       cmd: python src/splitData.py --config=config/config.yaml --params=params.yaml
       deps:
-        - src/splitData.py
+        - src/dataIngestion.py
+        - src/dataTransformation.py
         - src/utils/all_utils.py
         - config/config.yaml
         - artifacts/raw_local_dir/data.csv
-        - src/dataTransformation.py
-        - src/dataIngestion.py
       params:
         - base.random_state
         - base.test_size
       outs:
         - artifacts/split_data_dir/train.csv
         - artifacts/split_data_dir/test.csv
+
+  train:
+    cmd: python src/training.py --config=config/config.yaml --params=params.yaml
+    deps:
+      - src/dataIngestion.py
+      - src/dataTransformation.py
+      - src/splitData.py
+      - src/utils/all_utils.py
+      - config/config.yaml
+      - artifacts/split_data_dir/train.csv
+    params:
+      - base.random_state
+      - model_params.Logistic.penalty
+      - model_params.Logistic.max_iter
+    outs:
+      - artifacts/model_dir/Logistic.model      
