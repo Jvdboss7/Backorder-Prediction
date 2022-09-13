@@ -4,14 +4,14 @@ stages:
     cmd: python src/dataIngestion.py --config=config/config.yaml
     deps:
     - path: config/config.yaml
-      md5: 6fb41d04a9e429519f0e260e390ae5a3
-      size: 435
+      md5: 0950db033eba4aae9044751597db9307
+      size: 484
     - path: src/dataIngestion.py
       md5: 98bef255f8c21d0753fae0da92f4fce8
       size: 1026
     - path: src/utils/all_utils.py
-      md5: 89762d1f6c07ed2deba6180c93384a37
-      size: 483
+      md5: 97c3350f0f709c84def6225a1afbfb62
+      size: 683
     outs:
     - path: artifacts/raw_local_dir/data.csv
       md5: d92a57c8f143b46dbe18f546a2124b2c
@@ -23,20 +23,17 @@ stages:
       md5: d92a57c8f143b46dbe18f546a2124b2c
       size: 23387086
     - path: config/config.yaml
-      md5: 6fb41d04a9e429519f0e260e390ae5a3
-      size: 435
+      md5: 0950db033eba4aae9044751597db9307
+      size: 484
     - path: src/dataIngestion.py
       md5: 98bef255f8c21d0753fae0da92f4fce8
       size: 1026
     - path: src/dataTransformation.py
       md5: 28d4d46e693205dcd261c11fcd3c6c00
       size: 3813
-    - path: src/splitData.py
-      md5: 02cfeda03eaceb845584e661dbf3f93c
-      size: 1721
     - path: src/utils/all_utils.py
-      md5: 89762d1f6c07ed2deba6180c93384a37
-      size: 483
+      md5: 97c3350f0f709c84def6225a1afbfb62
+      size: 683
     params:
       params.yaml:
         base.random_state: 42
@@ -52,17 +49,14 @@ stages:
     cmd: python src/dataTransformation.py --config=config/config.yaml
     deps:
     - path: config/config.yaml
-      md5: 6fb41d04a9e429519f0e260e390ae5a3
-      size: 435
+      md5: 0950db033eba4aae9044751597db9307
+      size: 484
     - path: src/dataIngestion.py
       md5: 98bef255f8c21d0753fae0da92f4fce8
       size: 1026
-    - path: src/dataTransformation.py
-      md5: 28d4d46e693205dcd261c11fcd3c6c00
-      size: 3813
     - path: src/utils/all_utils.py
-      md5: 89762d1f6c07ed2deba6180c93384a37
-      size: 483
+      md5: 97c3350f0f709c84def6225a1afbfb62
+      size: 683
     outs:
     - path: artifacts/transform_local_dir/transformed_data.csv
       md5: b9a4d30cf08bb93e10277558f5a66427
@@ -74,8 +68,41 @@ stages:
       md5: 8f8c3fb15cfb7c5752c9ae9d59ad9e55
       size: 29108369
     - path: config/config.yaml
-      md5: 6fb41d04a9e429519f0e260e390ae5a3
-      size: 435
+      md5: 0950db033eba4aae9044751597db9307
+      size: 484
+    - path: src/dataIngestion.py
+      md5: 98bef255f8c21d0753fae0da92f4fce8
+      size: 1026
+    - path: src/dataTransformation.py
+      md5: 28d4d46e693205dcd261c11fcd3c6c00
+      size: 3813
+    - path: src/splitData.py
+      md5: 02cfeda03eaceb845584e661dbf3f93c
+      size: 1721
+    - path: src/utils/all_utils.py
+      md5: 97c3350f0f709c84def6225a1afbfb62
+      size: 683
+    params:
+      params.yaml:
+        base.random_state: 42
+        model_params.Logistic.max_iter: 200
+        model_params.Logistic.penalty: l2
+    outs:
+    - path: artifacts/model_dir/Logistic.model
+      md5: 11ea7b81fa2e8d1ea2c6cbf46f50dafc
+      size: 1757
+  evaluate:
+    cmd: python src/evaluate.py --config=config/config.yaml --params=params.yaml
+    deps:
+    - path: artifacts/model_dir/Logistic.model
+      md5: 11ea7b81fa2e8d1ea2c6cbf46f50dafc
+      size: 1757
+    - path: artifacts/split_data_dir/test.csv
+      md5: 08c91b7e1ac6f2aad889494221e57824
+      size: 12461845
+    - path: config/config.yaml
+      md5: 0950db033eba4aae9044751597db9307
+      size: 484
     - path: src/dataIngestion.py
       md5: 98bef255f8c21d0753fae0da92f4fce8
       size: 1026
@@ -89,14 +116,9 @@ stages:
       md5: 3aa3d59431686251f28c37f86489c5ce
       size: 1618
     - path: src/utils/all_utils.py
-      md5: 89762d1f6c07ed2deba6180c93384a37
-      size: 483
-    params:
-      params.yaml:
-        base.random_state: 42
-        model_params.Logistic.max_iter: 200
-        model_params.Logistic.penalty: l2
+      md5: 97c3350f0f709c84def6225a1afbfb62
+      size: 683
     outs:
-    - path: artifacts/model_dir/Logistic.model
-      md5: 11ea7b81fa2e8d1ea2c6cbf46f50dafc
-      size: 1757
+    - path: artifacts/reports_dir/scores.json
+      md5: affcfa15d8af5f90d599bbf3bc8aa19e
+      size: 38

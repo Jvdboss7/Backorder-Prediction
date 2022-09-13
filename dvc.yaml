@@ -46,4 +46,18 @@ stages:
       - model_params.Logistic.penalty
       - model_params.Logistic.max_iter
     outs:
-      - artifacts/model_dir/Logistic.model      
+      - artifacts/model_dir/Logistic.model
+
+  evaluate:
+    cmd: python src/evaluate.py --config=config/config.yaml --params=params.yaml
+    deps:
+      - src/dataIngestion.py
+      - src/dataTransformation.py
+      - src/splitData.py
+      - src/training.py
+      - src/utils/all_utils.py
+      - config/config.yaml
+      - artifacts/split_data_dir/test.csv
+      - artifacts/model_dir/Logistic.model
+    outs:
+      - artifacts/reports_dir/scores.json      
