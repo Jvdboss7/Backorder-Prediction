@@ -5,4 +5,4 @@ base:
 model_params: 
   Logistic: 
     penalty: l2
-    max_iter: 200
+    max_iter: 250

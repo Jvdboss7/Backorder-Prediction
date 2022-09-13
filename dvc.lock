@@ -85,17 +85,17 @@ stages:
     params:
       params.yaml:
         base.random_state: 42
-        model_params.Logistic.max_iter: 200
+        model_params.Logistic.max_iter: 250
         model_params.Logistic.penalty: l2
     outs:
     - path: artifacts/model_dir/Logistic.model
-      md5: 11ea7b81fa2e8d1ea2c6cbf46f50dafc
+      md5: c091e029d67c2d88d2450a9752d288fa
       size: 1757
   evaluate:
     cmd: python src/evaluate.py --config=config/config.yaml --params=params.yaml
     deps:
     - path: artifacts/model_dir/Logistic.model
-      md5: 11ea7b81fa2e8d1ea2c6cbf46f50dafc
+      md5: c091e029d67c2d88d2450a9752d288fa
       size: 1757
     - path: artifacts/split_data_dir/test.csv
       md5: 08c91b7e1ac6f2aad889494221e57824

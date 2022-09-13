@@ -10,7 +10,7 @@ setup(
     description = "Backorder prediction package",
     long_description = long_description,
     url ="https://github.com/Jvdboss7/Backorder-Prediction",
-    author_email="jaydeep@ineuron.ai",
+    author_email="jaydeepdixit2@gmail.com",
     packages = ["src"],
     python_requires = ">=3.7",
     install_requires = [
